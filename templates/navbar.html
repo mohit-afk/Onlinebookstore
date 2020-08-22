@@ -1,0 +1,151 @@
+{% load cart_template_tags %}
+
+<!--<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">-->
+<!--    <div class="container">-->
+
+<!--      &lt;!&ndash; Brand &ndash;&gt;-->
+<!--      <a class="navbar-brand waves-effect" href="/">-->
+<!--        <strong class="blue-text">DJe-commerce</strong>-->
+<!--      </a>-->
+
+<!--      &lt;!&ndash; Collapse &ndash;&gt;-->
+<!--      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
+<!--        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--      </button>-->
+
+<!--      &lt;!&ndash; Links &ndash;&gt;-->
+<!--      <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+
+<!--        &lt;!&ndash; Left &ndash;&gt;-->
+<!--        <ul class="navbar-nav mr-auto">-->
+<!--          {% comment %} <li class="nav-item active">-->
+<!--            <a class="nav-link waves-effect" href="/">Home-->
+<!--              <span class="sr-only">(current)</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link waves-effect" href="/checkout">-->
+<!--            Checkout</a>-->
+<!--          </li> {% endcomment %}-->
+<!--        </ul>-->
+
+<!--        &lt;!&ndash; Right &ndash;&gt;-->
+<!--        <ul class="navbar-nav nav-flex-icons">-->
+<!--          {% if request.user.is_authenticated %}-->
+<!--          <li class="nav-item">-->
+<!--            <a href="{% url 'core:order-summary' %}" class="nav-link waves-effect">-->
+<!--              <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>-->
+<!--              <i class="fas fa-shopping-cart"></i>-->
+<!--              <span class="clearfix d-none d-sm-inline-block"> Cart </span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link waves-effect" href="{% url 'account_logout' %}">-->
+<!--              <span class="clearfix d-none d-sm-inline-block"> Logout </span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          {% else %}-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link waves-effect" href="{% url 'account_login' %}">-->
+<!--              <span class="clearfix d-none d-sm-inline-block"> Login </span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link waves-effect" href="{% url 'account_signup' %}">-->
+<!--              <span class="clearfix d-none d-sm-inline-block"> Signup </span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          {% endif %}-->
+<!--        </ul>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </nav>-->
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>{% block title %} {% endblock %}</title>
+      <style>
+         {% block css %} {% endblock %}
+  </style>
+  </head>
+  <body>
+  {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/shop/">
+		<img src="{% static 'bk.png' %}" width="60" height="60" alt="" class="d-inline-block">
+	</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/products">Books</a>
+      </li>
+
+     <!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Category
+        </a>{% for product,range,ncat in allCat %}
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+          <a class="dropdown-item" href="#">{{product.0.category}}</a>
+
+          <a class="dropdown-item" href="#">{{forloop.counter}}</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>{% endfor %}
+      </li>-->
+      <li class="nav-item">
+        <a class="nav-link" href="/about" tabindex="-1" aria-disabled="true">About us</a>
+      </li>
+      {% if request.user.is_authenticated %}
+      			<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Hii! {{ request.user.username }}
+                </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="#">Account</a>
+    				<a class="dropdown-item" href="/order-details">Order Details</a>
+    				<a class="dropdown-item" href="{% url 'account_logout' %}">sign out</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+        <a class="nav-link" href="{% url 'account_login' %}">Register</a>
+      </li>{% endif %}
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0" method="get" action="/search">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" name="srch" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+      {% if request.user.is_authenticated %}
+      <li class="nav-item">-->
+            <a href="{% url 'core:order-summary' %}" class="nav-link waves-effect">
+              <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+      {% endif %}
+</nav>

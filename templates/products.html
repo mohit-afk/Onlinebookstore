@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %} Home {% endblock %}
+    {% block css %}{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+  {% for i in object_list %}
+
+                <div class="col mt-5">
+					<div class="card text-center onhover" style="width: 18em;">
+						<center class="p-2"><img class="d-inline-block mt-4" src="{{i.image.url}}" alt="Card image cap" style="width:200px;height:200px"></center>
+						₹{{i.discount_price}}
+						<a class="btn btn-primary" style="font-size: 8pt" href="{{ i.get_absolute_url }}">{{i.title}}</a>
+					</div>
+				</div>
+	{% endfor %}
+	</div>
+</div>
+
+<div class="mt-5">
+</div>
+
+{% endblock content %}

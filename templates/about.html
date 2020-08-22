@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{%load static %}
+{% block title %}About us {% endblock %}
+{% block content %}
+
+<div class="container mt-5 p-5" style="background-color: rgba(206,206,206,.5);">
+    <div class="row align-items-center">
+        <div class="col-md-4 text-light text-center">
+            <div id="imgContainer" class="p-5" style="background-image: url('{% static '5.jpg' %}');background-size: cover;">
+                <h1 class="text-left">5</h1>
+    			<h5 class="text-left">Years of Experience</h5>
+            </div>
+        </div>
+        <div class="col-md-8 text-center">
+            <h3>About Us</h3>
+            <p class="px-3">Buying books over the web at an online book shop is an interesting
+                and informative buying experience. It allows you to buy books suited to your
+                interests and that too while relaxing at home at any time of the day or night.
+                Online book browsing and buying is indeed transforming the way readers and
+                an author come together, and is already creating a huge effect on the publishing
+                and book retail industries.
+
+                Because an online retailer doesn’t have the overhead and other costs
+                associated with operating a store, it is typically able to sell books for less.
+                When purchasing a book online a consumer can easily scroll the sales page to read
+                reviews. These reviews can help them decide whether to purchase the book or not.
+                Yes, people can pull up reviews on their phone or other device while they are in
+                a store, but it’s much less convenient.
+</p>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

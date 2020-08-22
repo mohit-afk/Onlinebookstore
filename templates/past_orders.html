@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %} details {% endblock %}
+    {% block css %} {% endblock %}
+    {% block content %}
+ <div class="container col col">
+        <div class="row">
+
+            <div class="offset-1 p-3 bg-white rounded shadow-sm">
+
+                <div class="bg-dark text-white px-4 py-3 text-uppercase font-weight-bold">Orders</div>
+
+
+                <!-- Shopping cart table -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 text-uppercase">Quantity * Item</div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 text-uppercase">Order id</div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 text-uppercase">order date</div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 text-uppercase">order price</div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 text-uppercase">Trasaction id</div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 px-3 text-uppercase">Order Track</div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 px-3 text-uppercase"> Order&nbsp;status</div>
+                            </th>
+                            <th scope="col" class="border-0 bg-light">
+                                <div class="py-2 px-3 text-uppercase">&nbsp;</div>
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                {% for i in ord %}
+                <!--                Reason modal-->
+                <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+  <form method="post" action="{{ i.refund_req }}">
+         {% csrf_token %}
+          <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+             </div>
+         <div class="form-group">
+          <label for="uname"><strong>Reason</strong> </label>
+             <textarea maxlength="100" type="text" class="form-control" id="uname" name="reason" placeholder="Enter Reason" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">submit</button>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+                  <tr>
+                      <td class="border-0 align-middle" style="text-align: center"><strong>{{i.items.get}}</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center"><strong>{{i.ref_code}}</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center"><strong>{{i.ordered_date}}</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center"><strong>&#8377;{{i.payment.amount}}</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center"><strong>{{i.payment.stripe_charge_id}}</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center"><strong>{{i.ref_code}}</strong></td>
+
+                      {%if i.cancel_requested == False and i.received == False %}
+                      <td class="border-0 align-middle" style="text-align: center"><strong>Ready to Dispatched</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center"><a class="btn btn-danger" href='{{ i.cancel_req}}'>cancel</a></td>
+                            {% elif i.cancel_requested == True and i.cancel_granted == False and i.received == False %}
+                      <td class="border-0 align-middle" style="text-align: center"><strong>Request for cancellation</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center">
+                          <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Cancelling</a></td>
+                      {% elif i.cancel_granted == True and i.cancel_requested == True %}
+                      <td class="border-0 align-middle" style="text-align: center"><strong>Cancelled</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center"><a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Cancelled</a></td>
+                           {% elif i.being_delivered == True and i.received == True and i.refund_requested == False and i.cancel_requested == False and i.cancel_granted == False  %}
+                      <td class="border-0 align-middle" style="text-align: center"><strong>Deliverd</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center">
+                          <button type="button" class="btn btn-danger mx-5" id="signupModal" class="close" data-dismiss="modal" data-toggle="modal" data-target="#signinModal">
+                            Refund</button></td>
+                      {% elif i.received == True and i.refund_requested == True %}
+                       <td class="border-0 align-middle" style="text-align: center"><strong>Requested for Refund</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center">
+                          <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Refunding</a></td>
+                      {% elif i.refund_requested == True and i.refund_granted == True %}
+                      <td class="border-0 align-middle" style="text-align: center"><strong>Refunded</strong></td>
+                      <td class="border-0 align-middle" style="text-align: center">
+                          <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Refunded</a></td>
+{% endif %}
+
+
+
+                            </tr>
+{% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+                   </div>
+        </div>
+     </div>
+
+{% endblock content %}

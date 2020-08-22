@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!--  <main class="mt-5 pt-4">-->
+<!--    <div class="container dark-grey-text mt-5">-->
+
+<!--      &lt;!&ndash;Grid row&ndash;&gt;-->
+<!--      <div class="row wow fadeIn">-->
+
+<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+<!--        <div class="col-md-6 mb-4">-->
+
+<!--          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">-->
+
+<!--        </div>-->
+<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+
+<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+<!--        <div class="col-md-6 mb-4">-->
+
+<!--          &lt;!&ndash;Content&ndash;&gt;-->
+<!--          <div class="p-4">-->
+
+<!--            <div class="mb-3">-->
+<!--              <a href="">-->
+<!--                <span class="badge purple mr-1">{{ object.get_category_display }}</span>-->
+<!--              </a>-->
+<!--            </div>-->
+
+<!--            <p class="lead">-->
+<!--              {% if object.discount_price %}-->
+<!--              <span class="mr-1">-->
+<!--                <del>${{ object.price }}</del>-->
+<!--              </span>-->
+<!--              <span>${{ object.discount_price }}</span>-->
+<!--              {% else %}-->
+<!--              <span>${{ object.price }}</span>-->
+<!--              {% endif %}-->
+<!--            </p>-->
+
+<!--            <p class="lead font-weight-bold">Description</p>-->
+
+<!--            <p>{{ object.description }}</p>-->
+
+<!--&lt;!&ndash;            {% comment %} <form class="d-flex justify-content-left">&ndash;&gt;-->
+<!--&lt;!&ndash;              &lt;!&ndash; Default input &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">&ndash;&gt;-->
+<!--&lt;!&ndash;              <button class="btn btn-primary btn-md my-0 p" type="submit">&ndash;&gt;-->
+<!--&lt;!&ndash;                Add to cart&ndash;&gt;-->
+<!--&lt;!&ndash;                <i class="fas fa-shopping-cart ml-1"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;              </button>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </form> {% endcomment %}&ndash;&gt;-->
+<!--            <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">-->
+<!--              Add to cart-->
+<!--              <i class="fas fa-shopping-cart ml-1"></i>-->
+<!--            </a>-->
+<!--            <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">-->
+<!--              Remove from cart-->
+<!--            </a>-->
+
+<!--          </div>-->
+<!--          &lt;!&ndash;Content&ndash;&gt;-->
+
+<!--        </div>-->
+<!--        &lt;!&ndash;Grid column&ndash;&gt;-->
+
+<!--      </div>-->
+<!--      &lt;!&ndash;Grid row&ndash;&gt;-->
+
+<!--      <hr>-->
+
+
+
+
+
+<!--    </div>-->
+<!--  </main>-->
+
+
+
+{% load static %}
+
+    {% block title %}  {% endblock %}
+    {% block css %} {% endblock %}
+    {% block body %}
+
+
+<div class="container my-5">
+	<div class="row align-items-center">
+		<div class="col-md-4">
+		<div class="imgAbt text-center">
+			<img width="320" height="320" src="{{object.image.url}}" id="prodImg">
+			<br>
+			<form action="#" method="post" class="text-center my-4" >
+{% csrf_token %}
+
+
+        {% if user.is_authenticated %}
+                {% if Data.size == 0 %}
+                    {{AVAIL}}
+                        {% else %}
+                <p class="text-left" style="padding-left:25px;">     {{Data.size}} Books left Hurry!</p>
+
+
+    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">
+              Add to cart
+              <i class="fas fa-shopping-cart ml-1"></i>
+            </a>
+            <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">
+              Remove from cart
+            </a>
+
+                {% endif %}
+        {% else %}
+    <a href="{% url 'account_login' %}" class="btn btn-primary">Sign in!</a>
+        {% endif %}
+
+
+		</div>
+	</div>
+	<div class="col-md-8">
+       <div class="p-4">
+
+            <div class="mb-3">
+             <h3>{{object.title}}</h3>
+            </div>
+
+            <p class="lead">
+              {% if object.discount_price %}
+              <span class="mr-1">
+                <del>₹{{object.price }}</del>
+              </span>
+              <span>₹{{ object.discount_price }}</span>
+              {% else %}
+              <span>₹{{ object.price }}</span>
+              {% endif %}
+            </p>
+
+            <p class="lead font-weight-bold">Description</p>
+
+            <p>{{ object.description }}</p>
+
+
+          </div>
+
+
+
+
+
+
+	</div>
+		<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Author Name</th>
+      <th scope="col">Language</th>
+      <th scope="col">ISBN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+
+      <td>{{object.get_category_display}}</td>
+      <td>{{object.author}}</td>
+      <td>{{object.get_language_display}}</td>
+      <td>{{object.isbn}}</td>
+    </tr>
+  </tbody>
+</table>
+	</div>
+</div>
+
+
+{% endblock %}{% endblock content %}

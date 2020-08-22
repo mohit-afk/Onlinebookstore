@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %} details {% endblock %}
+    {% block css %} {% endblock %}
+{% block body %}
+
+
+<h4> searched for {{query}}</h4>
+   {% for i in PRDT %}
+
+                <div class="col mt-5 m-x=5" >
+					<div class="card text-center onhover" style="width: 18em;">
+						<center class="p-2"><img class="d-inline-block mt-4" src="{{i.image.url}}" alt="Card image cap" style="width:200px;height:200px"></center>
+						₹{{i.price}}
+						<a class="btn btn-primary" style="font-size: 8pt" href="/shop/productview/{{i.id}}">{{i.title}}</a>
+					</div>
+				</div>
+
+
+                    </a>
+
+                </div>
+    {% endfor %}
+
+{% endblock %}
